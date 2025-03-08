@@ -5,7 +5,13 @@ document.getElementById("toggle").addEventListener("click", async () => {
         target: { tabId: tab.id },
         function: () => {
             document.designMode = document.designMode === "on" ? "off" : "on";
-            alert(`Edit Mode: ${document.designMode}`);
+            let status = document.designMode === "on" ? "Disable" : "Enable";
+            chrome.runtime.sendMessage({ status });
         }
     });
+});
+
+// Escuchar el mensaje y actualizar el botón
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    document.getElementById("toggle").innerText = message.status;
 });
