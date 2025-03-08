@@ -5,8 +5,10 @@ document.getElementById("toggle").addEventListener("click", async () => {
         target: { tabId: tab.id },
         function: () => {
             document.designMode = document.designMode === "on" ? "off" : "on";
-            let status = document.designMode === "on" ? "Disable" : "Enable";
-            chrome.runtime.sendMessage({ status });
+
+            // Evaluamos después de cambiar document.designMode
+            let newStatus = document.designMode === "on" ? "Disable" : "Enable";
+            chrome.runtime.sendMessage({ status: newStatus });
         }
     });
 });
